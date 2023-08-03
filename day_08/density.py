@@ -25,14 +25,14 @@ def build_hydro(m, n_0, T, alt):
     ''' 
     dz = (alt[1]-alt[0]) * 1000 # converts from km to m
     
-    density = []
-    density.insert(0, n_0) # insert first value of the densities
+    density = np.zeros(len(alt))
+    density[0] = n_0 # insert first value of the densities
     
     for i in np.arange(1, len(alt)):
         # starting from density[1], density[0] set above
         H = calc_scaleheight(m, alt, T)
-        dens = T[i-1]/T[i] * density[i-1] * np.exp(- dz/H[i-1])
-        density.append(dens)
+        density[i] = T[i-1]/T[i] * density[i-1] * np.exp(- dz/H[i-1])
+        # density.append(dens)
     return density
 
 
